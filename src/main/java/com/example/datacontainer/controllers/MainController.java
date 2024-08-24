@@ -31,7 +31,7 @@ public class MainController {
 
     @GetMapping(path = "/name")
     public @ResponseBody String name(@RequestParam String name) {
-        System.out.println("Name Detected: " + name );
+        logger.info("Name Received from Request: ", name);
         return "Hi, "+ name;
     }
 
@@ -42,9 +42,12 @@ public class MainController {
 
     @GetMapping("/data/{id}")
     public ResponseEntity<String> getData(@PathVariable int id) {
+        logger.info("Going to check id received in request");
         if (id < 0) {
+            logger.error("Given id is less than 0");
             return new ResponseEntity<>("Invalid ID", HttpStatus.BAD_REQUEST);
         }
+        logger.info("Given Id validated");
         return new ResponseEntity<>("Data for ID: " + id, HttpStatus.OK);
     }
 
